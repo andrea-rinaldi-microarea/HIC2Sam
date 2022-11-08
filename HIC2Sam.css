@@ -1,0 +1,17 @@
+body {
+    width: 80%;
+}
+
+.content {
+    width: 100%;
+    /* border: 1px solid black; */
+    /* min-height: 300px; */
+    margin-top: 10px;
+}
+
+.content textarea {
+    width: 100%;
+    height: auto;
+    resize: vertical;
+    min-height: 300px;
+}
