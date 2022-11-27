@@ -1,13 +1,16 @@
 <html>
     <head>
         <link href="HIC2Sam.css" rel="stylesheet" type="text/css" />
+        <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+        <script src="HIC2Sam.js"></script>
     </head>
     <body>
         <div class="content">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea name="HICContent" id="HICContent" cols="30" rows="10"></textarea>
         </div>
+        <button onclick="HIC2Sam.convert()">Convert</button>
         <div class="content">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea name="SamContent" id="SamContent" cols="30" rows="10"></textarea>
         </div>
     </body>
 </html>

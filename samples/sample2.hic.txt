@@ -1,0 +1,88 @@
+[RefGuide-Extensions-MagoAPI^]
+
+Here is a guide to setting up Mago4 to use the APIs.
+
+{TOC}
+
+==Requirements==
+The necessary requirements are:{BR}
+<ul>
+<li>'''Mago4''' (minimum version 3.6; for installation instructions, see: [RefGuide-M4-ERP-InstallationGuide*Installing and configuring Mago4]).
+Once the serial number is entered, activate at least the following modules:{BR}
+<ul>
+<li>Server</li>
+<li>Sales</li>
+<li>Customer Orders</li>
+<li>Inventory</li>
+<li>MagicLink</li>
+</ul>
+</li>
+<li> '''Store Management''' vertical module (Retail APP).
+Activate at least one of the following modules:{BR}
+<ul>
+<li>Open POS (which requires the Store Management module)</li>
+<li>Open eCommerce.</li>
+</ul>
+</li>
+</ul>
+
+Additional technical components essential for the solution are MSH, Erlang OTP and RabbitMQ, all installed directly from the Mago4.exe setup.
+
+==Installation==
+In order to use the Mago API it is necessary to install the '''Mago4''' and '''Mago4Retail''' setups on the same server.
+
+==Configuration==
+
+===MAGO4 Configuration===
+
+====Service User Enable====
+In order to access the MSH services, it is necessary to configure a service user and associate it to all the companies you want to use.{BR}
+This user is different from application users and cannot be used to access the program, but is dedicated to backend services only.{BR}
+It is important to point out that API calls, as will be seen later, require authentication. This authentication cannot be done with the service user, but a real application user must be used.
+
+To configure the service user, in the Administration Console:
+#Create a new user in ''Administration Tools | System Administrator | Application Users'', e.g. "service";
+#Right-click on the user, select ''Properties'' and set the option '''Only Service Access''';
+#Associate this user with all companies to be enabled for MSH services.
+
+((({S:Warning} Only one user of service type can be defined.)))
+
+After defining and associating the service user, perform an IIS restart for this change to be received by the MSH service.
+
+===MSH Configuration===
+
+====MSH Installation Check====
+In '''Internet Information Services (IIS) Manager''' verify that the ERPServiceProvider folder has been created.{BR}
+In particular, make sure that in the Mago4 installation folder, by opening the ERPServiceProvider folder, the Backend and Frontend entries are visible, which allow access to both the MSH server and its Backend.{BR}
+To verify that MSH is ready to respond, select Backend option and click on "Browse" in the Actions side panel.
+
+[imageauto|IIS Manager|{UP}/RefGuide-M4-InstallationGuideTCPOS(it-IT)/IISM.PNG]
+
+The following page will be opened:
+
+[imageauto|MSH Backend|{UP}/RefGuide-M4-InstallationGuideTCPOS(it-IT)/ESPBackend.png]
+
+To open the MSH Frontend, select Frontend option and click on "Browse" in the Actions side panel.{BR}
+At this point it is possible to access the MSH FrontEnd, by logging in with the Mago Service User.
+
+==MSH Services Startup Check==
+When accessing MSH ensure that the Open POS or Open eCommerce providers are active and that the services are started.
+
+
+==APIs Enablement Check==
+The APIs are exposed via a service called Mago Service Hub (MSH).{BR}
+The API Backend is enabled by default in MSH, but it may be needed to check for this.{BR}
+To do this retrieve the file:
+
+{{{{<esc><root></esc>\Standard\Applications\ERPServiceProvider\Backend\appSettings.json}}}}
+
+Where ''root'' is the folder where Mago4 has been installed, usually ''C:\Program Files (x86)\Microarea\Mago4''.
+
+Locate the MSManager section and check the value of the following parameter:
+
+{{{{"ExposeAPIs": true}}}}
+
+If it is ''false'', change it to '''true''' and perform an IIS restart for the MSH service to pick up the parameter change.
+
+
+{SEE ALSO}
